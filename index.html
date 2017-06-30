@@ -86,10 +86,12 @@
   ctx.clearRect(0, 0, c.width, c.height);
 
   function colorPixels(){
+    ctx.strokeStyle = '#000000';
     var x = Math.floor(Math.random() * c.width) + 1;
     var y = Math.floor(Math.random() * c.height) + 1;
     var numberOfLines = Math.floor(Math.random() * 50) + 1;
     var oneLine = (Math.round(Math.random()) === 0 ? true : false); // determines wether there will be only one continuous line or several
+    var colored = (Math.floor(Math.random() * 10) > 3 ? true : false); // determines wether there will be color 
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.lineWidth = Math.floor(Math.random() * 7) + 3;
     ctx.beginPath();
@@ -97,13 +99,20 @@
 
     for(var i = 0; i < numberOfLines; i++){
       if(!oneLine){
+        ctx.beginPath();
         x = Math.floor(Math.random() * c.width) + 1;
         y = Math.floor(Math.random() * c.height) + 1;
-        ctx.moveTo(x, y); 
+        ctx.moveTo(x, y);
+        if(colored){
+          ctx.strokeStyle = '#'+ Math.random().toString(16).slice(-6);
+        }
       }
       x = Math.floor(Math.random() * c.width) + 1;
       y = Math.floor(Math.random() * c.height) + 1;
       ctx.lineTo(x, y);
+      if(!oneLine){
+        ctx.closePath();
+      }
       ctx.stroke();
     }
   }
